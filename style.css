@@ -97,4 +97,10 @@ table.pressure{border-collapse:collapse;width:100%;max-width:520px;margin:14px 0
 table.pressure th,table.pressure td{border:1px solid #cfe6ef;padding:9px 12px;text-align:left}
 table.pressure th{background:var(--navy);color:#fff}
 table.pressure td:first-child{font-weight:700}
+.pagination{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:28px 0 8px;align-items:center}
+.pagebtn{display:inline-block;text-decoration:none;font-weight:700;padding:9px 16px;border-radius:999px;font-size:.95rem;border:2px solid var(--ice);color:var(--acc);background:#fff}
+.pagebtn:hover{background:#eaf6fc}
+.pagebtn.current{background:var(--acc);border-color:var(--acc);color:#fff}
+.ttwrap{max-width:605px;margin:18px auto}
+.ttwrap .tiktok-embed{margin:0 auto !important}
 @media(max-width:560px){h1{font-size:1.65rem}.hero{padding:24px 20px}.hero h2{font-size:1.4rem}}
