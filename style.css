@@ -48,5 +48,10 @@ h2{margin-top:34px;border-bottom:3px solid var(--ice);padding-bottom:8px;font-si
 .adslot{border:1px dashed #b6c6d1;background:#eef4f7;color:#7a8fa0;text-align:center;padding:26px 10px;border-radius:8px;margin:20px 0;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
 footer{background:var(--navy);color:#9fb8c4;padding:26px 0;margin-top:24px;font-size:.9rem;border-top:3px solid var(--ice)}
 footer a{color:#cfe6ef}
+.social{display:flex;align-items:center;gap:12px;justify-content:center;margin:0 0 14px}
+.social span{color:#cfe6ef;font-weight:600}
+.social a{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:var(--ice);transition:transform .15s,background .15s}
+.social a:hover{transform:translateY(-2px);background:#5ec8ef}
+.social svg{width:20px;height:20px;display:block}
 .small{font-size:.82rem}
 @media(max-width:560px){h1{font-size:1.65rem}.hero{padding:24px 20px}.hero h2{font-size:1.4rem}}
