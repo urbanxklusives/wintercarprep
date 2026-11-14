@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will My Car Start Tomorrow? Cold-Start Predictor | Winter Car Prep</title>
+<meta name="description" content="Will my car start tomorrow? Enter your town and battery age — we check tomorrow's overnight low and give you an honest cold-start risk rating, plus what to do tonight.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/img/favicon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Will My Car Start Tomorrow?","author":{"@type":"Organization","name":"Winter Car Prep"}}</script>
+</head>
+<body>
+<div class="ribbon">❄️ <span>Winter 2026 — 25 guides live, written for Canadian winters</span></div><header><div class="wrap"><a class="brand" href="index.html"><img class="brandlogo" src="assets/img/logo.png" alt="Winter Car Prep logo">Winter Car Prep</a><nav><a href="index.html">Home</a><a href="winter-tires.html">Winter Tires</a><a href="battery.html">Battery</a><a href="emergency-kit.html">Emergency Kit</a><a href="rust-protection.html">Rust Protection</a><a href="winter-checklist.html">Checklist</a><a href="winter-kit-builder.html">Kit Builder</a><a href="will-my-car-start.html">Will It Start?</a><a href="blog.html">Blog</a><a href="about.html">About</a></nav></div></header>
+<main class="wrap">
+<h1>Will My Car Start Tomorrow?</h1>
+<p class="standfirst">Tomorrow's overnight low, your battery's age, your car's age — one straight answer about tomorrow morning.</p>
+<div class="adslot"><span>Advertisement</span></div>
+<p>Tomorrow morning is the worst time to find out your battery is weak. This tool checks tomorrow's overnight low for your town, weighs it against your battery's age and your car's age, and gives you a straight answer: low, medium or high risk — plus what to do about it tonight.</p>
+<div class="toolbox">
+<label for="wms-place">City, town or postal code</label>
+<input type="text" id="wms-place" placeholder="e.g. Brampton" autocomplete="off">
+<label for="wms-batt">How old is your car battery?</label>
+<select id="wms-batt"><option value="under3">Under 3 years</option><option value="3to5" selected>3 to 5 years</option><option value="over5">Over 5 years</option><option value="dontknow">I don't know</option></select>
+<label for="wms-car">How old is your car?</label>
+<select id="wms-car"><option value="under5">Under 5 years</option><option value="5to10" selected>5 to 10 years</option><option value="over10">Over 10 years</option></select>
+<br><button class="toolbtn" type="button" onclick="checkStart()">Will it start tomorrow?</button>
+<p class="fineprint" style="margin-top:12px">No forecast for your town? <a href="#" onclick="showManual(event)">Enter tomorrow's low manually instead.</a></p>
+<div id="wms-result"></div>
+</div>
+<script>
+function riskScore(low,batt,carAge){
+  var s=0,reasons=[];
+  if(low<-30){s+=3;reasons.push("Tomorrow's low is below -30°C — extreme cold cuts a battery's power by more than half.");}
+  else if(low<-20){s+=2;reasons.push("Tomorrow's low is below -20°C — cold cuts battery power by up to half.");}
+  else if(low<-10){s+=1;reasons.push("Tomorrow's low is below -10°C — cold starts get harder from here.");}
+  else{reasons.push("Tomorrow's low stays above -10°C, which most batteries handle fine.");}
+  if(batt==='over5'){s+=2;reasons.push('Your battery is over 5 years old — past its typical life.');}
+  else if(batt==='3to5'){s+=1;reasons.push('Your battery is 3 to 5 years old — the age when weak ones start failing.');}
+  else if(batt==='dontknow'){s+=1;reasons.push('Battery age unknown — we assumed the middle of the range. Check the date sticker on the battery itself.');}
+  else{reasons.push('Your battery is under 3 years old — that is in your favour.');}
+  if(carAge==='over10'){s+=1;reasons.push('Your car is over 10 years old — older starters and worn parts make cold starts harder.');}
+  return{score:s,reasons:reasons};
+}
+function showResult(placeLabel,dateStr,low,batt,carAge,mode){
+  var r=riskScore(low,batt,carAge);
+  var level,cls,meter;
+  if(r.score<=1){level='Low risk';cls='risk-low';meter='<span class="on-low">Low</span><span>Medium</span><span>High</span>';}
+  else if(r.score<=3){level='Medium risk';cls='risk-med';meter='<span>Low</span><span class="on-med">Medium</span><span>High</span>';}
+  else{level='High risk';cls='risk-high';meter='<span>Low</span><span>Medium</span><span class="on-high">High</span>';}
+  var advice=[];
+  if(r.score<=1){
+    advice.push('Your car should start fine. Keep the fuel tank above half and you are good.');
+    advice.push('Still worth a quick check: clean battery terminals and a full tank cost nothing.');
+  }else if(r.score<=3){
+    advice.push('Worth a little prep tonight: park facing out so a jump start is easy, and avoid short trips that drain the battery without recharging it.');
+    if(low<-20){advice.push('If you have a block heater, plug it in tonight — it keeps the oil warm and the engine turns over far more easily.');}
+    if(batt==='3to5'||batt==='over5'||batt==='dontknow'){advice.push('Get the battery tested — most auto parts stores do it free in five minutes.');}
+    advice.push('Keep jumper cables or a portable jump starter in the car, just in case.');
+  }else{
+    advice.push('Take action tonight: plug in the block heater if you have one, and park in a garage if you can — even an unheated garage is several degrees warmer.');
+    advice.push('Get the battery tested as soon as possible. At this risk level, a weak battery is a matter of when, not if.');
+    advice.push('Keep a portable jump starter charged and in the car, and know who you would call for a boost.');
+  }
+  var head;
+  if(mode==='forecast'){head='<h3>'+placeLabel+'</h3><p>Tomorrow ('+dateStr+') overnight low: <strong>'+low+'&deg;C</strong></p>';}
+  else{head='<h3>Manual check</h3><p>Expected overnight low: <strong>'+low+'&deg;C</strong></p>';}
+  var reasons='<ul>'+r.reasons.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';
+  var tips='<ul>'+advice.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';
+  document.getElementById('wms-result').innerHTML='<div class="resultbox">'+head+'<div class="meter">'+meter+'</div><p class="riskbig '+cls+'">'+level+' — cold-start score '+r.score+' of 6</p><h3>Why this rating</h3>'+reasons+'<h3>What to do tonight</h3>'+tips+'<p><a href="battery.html">Battery care guide</a> &middot; <a href="blog-car-wont-start-cold.html">What to do if it does not start</a> &middot; <a href="blog-block-heater.html">Block heaters, explained</a></p><p class="fineprint">An estimate, not a guarantee. A weak battery can fail on a mild night, and a strong one can start at -30°C. Forecast data: Open-Meteo.</p></div>';
+}
+async function checkStart(){
+  var place=document.getElementById('wms-place').value.trim();
+  var batt=document.getElementById('wms-batt').value;
+  var car=document.getElementById('wms-car').value;
+  var out=document.getElementById('wms-result');
+  if(!place){out.innerHTML='<p>Enter a city or town first — or use the manual option below.</p>';return;}
+  out.innerHTML='<p>Checking tomorrow&rsquo;s forecast...</p>';
+  try{
+    var g=await fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(place)+'&count=5&language=en&format=json');
+    var gj=await g.json();
+    if(!gj.results||!gj.results.length){throw new Error('place-not-found');}
+    var r=null;
+    for(var i=0;i<gj.results.length;i++){if(gj.results[i].country_code==='CA'){r=gj.results[i];break;}}
+    if(!r){r=gj.results[0];}
+    var label=r.name+(r.admin1?', '+r.admin1:'')+(r.country?', '+r.country:'');
+    var f=await fetch('https://api.open-meteo.com/v1/forecast?latitude='+r.latitude+'&longitude='+r.longitude+'&daily=temperature_2m_min&temperature_unit=celsius&timezone=auto&forecast_days=2');
+    var fj=await f.json();
+    if(!fj.daily||!fj.daily.temperature_2m_min||fj.daily.temperature_2m_min.length<2){throw new Error('forecast-missing');}
+    showResult(label,fj.daily.time[1],fj.daily.temperature_2m_min[1],batt,car,'forecast');
+  }catch(e){
+    out.innerHTML='<div class="resultbox"><h3>We could not look that place up</h3><p>That happens with small towns and postal codes. Enter tomorrow&rsquo;s expected overnight low yourself and we will still work out your risk.</p><label for="wms-manual">Tomorrow&rsquo;s expected low (&deg;C)</label><input type="number" id="wms-manual" value="-15" min="-50" max="10" step="1"><br><button class="toolbtn" type="button" onclick="checkManual()">Check my risk</button></div>';
+  }
+}
+function checkManual(){
+  var low=parseFloat(document.getElementById('wms-manual').value);
+  var batt=document.getElementById('wms-batt').value;
+  var car=document.getElementById('wms-car').value;
+  if(isNaN(low)){document.getElementById('wms-result').innerHTML='<p>Enter a temperature to check your risk.</p>';return;}
+  showResult(null,null,low,batt,car,'manual');
+}
+function showManual(ev){
+  if(ev){ev.preventDefault();}
+  var out=document.getElementById('wms-result');
+  out.innerHTML='<div class="resultbox"><h3>Enter tomorrow&rsquo;s low yourself</h3><p>Check any weather app for your town&rsquo;s overnight low, then type it here.</p><label for="wms-manual">Tomorrow&rsquo;s expected low (&deg;C)</label><input type="number" id="wms-manual" value="-15" min="-50" max="10" step="1"><br><button class="toolbtn" type="button" onclick="checkManual()">Check my risk</button></div>';
+}
+</script>
+<h2>How the risk is worked out</h2><p>Three things decide whether your car starts on a cold morning, and the score adds them up (0 to 6 points):</p><ul><li><strong>Tomorrow's overnight low (0–3 points).</strong> Above -10&deg;C scores 0. Below -10&deg;C scores 1, below -20&deg;C scores 2, below -30&deg;C scores 3. Cold slows the chemical reaction inside a battery — at -20&deg;C a battery can lose up to half its power, right when thick cold oil makes the engine harder to turn over.</li><li><strong>Battery age (0–2 points).</strong> Under 3 years scores 0, 3–5 years scores 1, over 5 years scores 2. Most car batteries last 4–5 years. If you don't know the age, we score 1 and you should check the date sticker on the battery itself.</li><li><strong>Car age (0–1 point).</strong> Over 10 years adds 1 point — older starters, wiring and worn parts make cold starts harder.</li></ul><p><strong>0–1 points is Low risk, 2–3 is Medium, 4–6 is High.</strong> The score is an honest estimate, not a promise — a battery test at a parts store (usually free) tells you more than any calculator can.</p>
+<h2>Frequently asked questions</h2>
+<h3>Will my car start in -20&deg;C?</h3><p>Usually yes, if the battery is healthy and under 4–5 years old. At -20&deg;C a battery can lose up to half its power, so an older battery is the risk — get it tested free at a parts store.</p>
+<h3>What temperature is too cold for a car battery?</h3><p>There is no single cutoff, but below -25&deg;C even good batteries struggle, and below -30&deg;C a weak battery often fails. A block heater helps a lot below -15&deg;C.</p>
+<h3>How do I know if my battery is too old?</h3><p>Check the date sticker on the battery itself. Most car batteries last 4–5 years. Slow cranking on cold mornings is the first warning sign.</p>
+<h3>Should I plug in my block heater tonight?</h3><p>If the overnight low will drop below -15&deg;C and you have a block heater, yes — plug it in 2–3 hours before you need the car, or use a timer.</p>
+<p>Related reading: <a href="battery.html">Winter battery care</a> &middot; <a href="blog-car-wont-start-cold.html">What to do if your car won't start in the cold</a> &middot; <a href="blog-battery-blanket-cold.html">Battery blankets and cold starts</a></p><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my car start in -20C?","acceptedAnswer":{"@type":"Answer","text":"Usually yes, if the battery is healthy and under 4-5 years old. At -20C a battery can lose up to half its power, so an older battery is the risk \u2014 get it tested free at a parts store."}},{"@type":"Question","name":"What temperature is too cold for a car battery?","acceptedAnswer":{"@type":"Answer","text":"There is no single cutoff, but below -25C even good batteries struggle, and below -30C a weak battery often fails. A block heater helps a lot below -15C."}},{"@type":"Question","name":"How do I know if my battery is too old?","acceptedAnswer":{"@type":"Answer","text":"Check the date sticker on the battery itself. Most car batteries last 4-5 years. Slow cranking on cold mornings is the first warning sign."}},{"@type":"Question","name":"Should I plug in my block heater tonight?","acceptedAnswer":{"@type":"Answer","text":"If the overnight low will drop below -15C and you have a block heater, yes \u2014 plug it in 2-3 hours before you need the car, or use a timer."}}]}</script>
+</main>
+<footer><div class="wrap"><p class="social"><span>Follow Winter Car Prep:</span><a href="https://www.tiktok.com/@user9103381524149" target="_blank" rel="noopener" aria-label="Winter Car Prep on TikTok"><svg fill="#FFFFFF" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a><a href="https://www.facebook.com/profile.php?id=61596274842363" target="_blank" rel="noopener" aria-label="Winter Car Prep on Facebook"><svg fill="#FFFFFF" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg></a></p><p>&copy; 2026 Winter Car Prep. All rights reserved.</p><p class="small">As an Amazon Associate, this site earns from qualifying purchases. Prices change — always confirm before you buy. <a href="about.html">About &amp; Disclosure</a> &middot; <a href="privacy-policy.html">Privacy Policy</a> &middot; <a href="contact.html">Contact</a></p></div></footer>
+</body>
+</html>

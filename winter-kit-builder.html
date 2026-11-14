@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Winter Emergency Kit Checklist Builder — Build Your Car Kit for Winter | Winter Car Prep</title>
+<meta name="description" content="Build your winter emergency kit checklist in 30 seconds. Answer 3 questions about your winters, your driving and your passengers — get a personalized checklist to tick off and print.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/img/favicon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Winter Kit Builder","author":{"@type":"Organization","name":"Winter Car Prep"}}</script>
+</head>
+<body>
+<div class="ribbon">❄️ <span>Winter 2026 — 25 guides live, written for Canadian winters</span></div><header><div class="wrap"><a class="brand" href="index.html"><img class="brandlogo" src="assets/img/logo.png" alt="Winter Car Prep logo">Winter Car Prep</a><nav><a href="index.html">Home</a><a href="winter-tires.html">Winter Tires</a><a href="battery.html">Battery</a><a href="emergency-kit.html">Emergency Kit</a><a href="rust-protection.html">Rust Protection</a><a href="winter-checklist.html">Checklist</a><a href="winter-kit-builder.html">Kit Builder</a><a href="will-my-car-start.html">Will It Start?</a><a href="blog.html">Blog</a><a href="about.html">About</a></nav></div></header>
+<main class="wrap">
+<h1>Winter Kit Builder</h1>
+<p class="standfirst">Three questions, one personal emergency-kit checklist. Built for your winter, your driving, and your passengers.</p>
+<div class="adslot"><span>Advertisement</span></div>
+<p>Every winter kit starts the same — blanket, flashlight, jumper cables — but the right kit for a solo city driver is not the right kit for a family driving remote highways at -30&deg;C. Answer three questions and this builder gives you a checklist made for your winter. Tick items off as you pack them, and print the list when you're done.</p>
+<div class="toolbox">
+<label for="kb-temp">How cold does it get where you drive?</label>
+<select id="kb-temp"><option value="mild">Mild — rarely below -10&deg;C</option><option value="cold" selected>Cold — -10&deg;C to -25&deg;C</option><option value="extreme">Extreme — below -25&deg;C</option></select>
+<label for="kb-drive">What kind of driving do you mostly do?</label>
+<select id="kb-drive"><option value="city" selected>City — short trips, help nearby</option><option value="highway">Highway — longer trips between towns</option><option value="remote">Remote &amp; rural — long stretches, little help around</option></select>
+<label>Who usually rides along?</label>
+<label class="checkrow"><input type="checkbox" id="kb-family"> Family (other adults)</label>
+<label class="checkrow"><input type="checkbox" id="kb-kids"> Kids</label>
+<label class="checkrow"><input type="checkbox" id="kb-pets"> Pets</label>
+<br><button class="toolbtn" type="button" onclick="buildKit()">Build my kit</button>
+<div id="kb-result"></div>
+</div>
+<script>
+var KIT={
+base:[
+{t:"Warm blanket or sleeping bag",d:"The single most important item if you are stuck waiting for help.",l:"emergency-kit.html"},
+{t:"Flashlight + spare batteries",d:"Your phone flashlight drains the battery you might need for a call."},
+{t:"Phone charger (car + portable battery)",d:"A dead phone in a stuck car is a real problem."},
+{t:"Jumper cables or a portable jump starter",d:"A portable jump starter works with no second vehicle needed.",l:"battery.html"},
+{t:"Ice scraper + snow brush",d:"Keep them where you can reach them, not buried in the trunk."},
+{t:"Small folding shovel",d:"The difference between stuck for 10 minutes and stuck for hours.",l:"blog-unstuck-right-way.html"},
+{t:"Bag of sand or cat litter",d:"Pour it under the drive wheels for traction on ice."},
+{t:"Reflective triangles or flares",d:"So other drivers see you long before they reach you."},
+{t:"First-aid kit",d:"Bandages, painkillers, any medication you need daily."},
+{t:"Water (2 bottles) + granola bars",d:"Rotate them monthly — water freezes and bars go stale."},
+{t:"Hand warmers",d:"Cheap, light, and worth their weight when the heat is off."},
+{t:"Paper list of emergency numbers",d:"If your phone dies, the numbers on paper still work."}],
+cold:[
+{t:"Extra gloves, hat and socks",d:"Wet gloves lose heat fast — a dry spare pair matters."},
+{t:"Second blanket",d:"One blanket is comfort. Two is survival on a long wait."},
+{t:"Windshield washer fluid (winter formula)",d:"Summer fluid freezes on the glass mid-drive.",l:"blog-washer-fluid-winter.html"},
+{t:"Candle + matches in a tin",d:"One candle takes the edge off the cold inside a parked car. Crack a window for air."}],
+extreme:[
+{t:"Sleeping bag rated for cold",d:"Below -25°C a blanket is not enough for a long wait."},
+{t:"Tow strap",d:"A passing truck can pull you out — if you have something to attach."},
+{t:"Extra food and water for 24 hours",d:"In extreme cold, help can take far longer than you expect."}],
+highway:[
+{t:"Reflective vest",d:"If you step out on a highway shoulder, be visible."},
+{t:"Full-size shovel",d:"A folding shovel struggles in a deep ditch. A full-size one does not."},
+{t:"Extra water + food",d:"Highway waits are longer waits — pack for it."}],
+remote:[
+{t:"Satellite messenger or personal locator beacon",d:"Worth it if you regularly drive where phones do not work."},
+{t:"Tow strap",d:"In remote areas the first help is usually another driver."},
+{t:"Extra fuel in a secured can",d:"Only if you can carry it safely, outside the cabin. Otherwise keep the tank above half."}],
+family:[
+{t:"A blanket per person",d:"One blanket does not stretch across four people."},
+{t:"Extra snacks and water per person",d:"Count heads, then pack for every one of them."}],
+kids:[
+{t:"Extra warm clothes for the kids",d:"Pack for the smallest passenger first — kids lose heat faster."},
+{t:"Snacks, water, and something to keep them calm",d:"A book or a toy turns a scary wait into a boring one."}],
+pets:[
+{t:"Pet blanket + extra water + food",d:"Your pet gets cold and thirsty too."},
+{t:"Leash",d:"A scared dog that bolts from a stuck car is a second emergency."}]};
+function buildKit(){
+  var temp=document.getElementById('kb-temp').value;
+  var drive=document.getElementById('kb-drive').value;
+  var groups=[['Every kit needs',KIT.base]];
+  if(temp==='cold'||temp==='extreme'){groups.push(['For cold winters (-10 to -25°C)',KIT.cold]);}
+  if(temp==='extreme'){groups.push(['For extreme cold (below -25°C)',KIT.extreme]);}
+  if(drive==='highway'||drive==='remote'){groups.push(['For highway driving',KIT.highway]);}
+  if(drive==='remote'){groups.push(['For remote and rural driving',KIT.remote]);}
+  if(document.getElementById('kb-family').checked){groups.push(['For the family',KIT.family]);}
+  if(document.getElementById('kb-kids').checked){groups.push(['For the kids',KIT.kids]);}
+  if(document.getElementById('kb-pets').checked){groups.push(['For pets',KIT.pets]);}
+  var total=0,html='<p id="kb-count"></p>';
+  groups.forEach(function(g){
+    html+='<div class="kitgroup"><h3>'+g[0]+'</h3>';
+    g[1].forEach(function(it){
+      total++;
+      var link=it.l?' <a href="'+it.l+'">Read the guide &rarr;</a>':'';
+      html+='<label class="kititem"><input type="checkbox" class="kb-check"><span><b>'+it.t+'</b>'+it.d+link+'</span></label>';
+    });
+    html+='</div>';
+  });
+  html+='<p><button class="toolbtn secondary" type="button" onclick="window.print()">Print my checklist</button></p>';
+  html+='<p class="fineprint">Check your kit every November — replace dead batteries, stale snacks and frozen water. Full details on every item: <a href="emergency-kit.html">the winter emergency kit guide</a>.</p>';
+  var box=document.getElementById('kb-result');
+  box.innerHTML=html;
+  box.setAttribute('data-total',total);
+  updateCount();
+  box.onchange=updateCount;
+}
+function updateCount(){
+  var box=document.getElementById('kb-result');
+  var total=parseInt(box.getAttribute('data-total')||'0',10);
+  var done=box.querySelectorAll('.kb-check:checked').length;
+  var c=document.getElementById('kb-count');
+  if(c){c.innerHTML='<strong>'+done+' of '+total+' items packed.</strong> '+(done===total&&total>0?'Your kit is ready — stay warm out there.':'Tick each item off as you pack it.');}
+}
+</script>
+<h2>Frequently asked questions</h2>
+<h3>What should be in a winter emergency kit?</h3><p>At minimum: a warm blanket, flashlight, phone charger, jumper cables or jump starter, ice scraper, small shovel, sand or cat litter for traction, reflective triangles, a first-aid kit, water and snacks, and hand warmers. The builder above tailors the list to your winters and passengers.</p>
+<h3>How much does a winter car kit cost?</h3><p>Most of it you already own. Buying the rest — blanket, shovel, jump starter, sand — runs about $75–$150. A portable jump starter ($60–$100) is the single best buy on the list.</p>
+<h3>Where should I keep my emergency kit?</h3><p>In the trunk, in one bag or box, where you can reach it without unpacking the car. Check it every November — replace dead batteries, stale snacks and frozen water.</p>
+<h3>Do I need a different kit for highway driving?</h3><p>Yes — longer trips mean longer waits. Add a reflective vest, a full-size shovel, and extra food and water. Remote driving adds a tow strap and a way to call for help out of cell range.</p><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What should be in a winter emergency kit?","acceptedAnswer":{"@type":"Answer","text":"At minimum: a warm blanket, flashlight, phone charger, jumper cables or jump starter, ice scraper, small shovel, sand or cat litter for traction, reflective triangles, a first-aid kit, water and snacks, and hand warmers."}},{"@type":"Question","name":"How much does a winter car kit cost?","acceptedAnswer":{"@type":"Answer","text":"Most of it you already own. Buying the rest \u2014 blanket, shovel, jump starter, sand \u2014 runs about $75-150. A portable jump starter ($60-100) is the single best buy on the list."}},{"@type":"Question","name":"Where should I keep my emergency kit?","acceptedAnswer":{"@type":"Answer","text":"In the trunk, in one bag or box, where you can reach it without unpacking the car. Check it every November."}},{"@type":"Question","name":"Do I need a different kit for highway driving?","acceptedAnswer":{"@type":"Answer","text":"Yes \u2014 longer trips mean longer waits. Add a reflective vest, a full-size shovel, and extra food and water. Remote driving adds a tow strap and a way to call for help out of cell range."}}]}</script>
+</main>
+<footer><div class="wrap"><p class="social"><span>Follow Winter Car Prep:</span><a href="https://www.tiktok.com/@user9103381524149" target="_blank" rel="noopener" aria-label="Winter Car Prep on TikTok"><svg fill="#FFFFFF" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a><a href="https://www.facebook.com/profile.php?id=61596274842363" target="_blank" rel="noopener" aria-label="Winter Car Prep on Facebook"><svg fill="#FFFFFF" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg></a></p><p>&copy; 2026 Winter Car Prep. All rights reserved.</p><p class="small">As an Amazon Associate, this site earns from qualifying purchases. Prices change — always confirm before you buy. <a href="about.html">About &amp; Disclosure</a> &middot; <a href="privacy-policy.html">Privacy Policy</a> &middot; <a href="contact.html">Contact</a></p></div></footer>
+</body>
+</html>
