@@ -62,7 +62,16 @@ footer a{color:#cfe6ef}
 .related li{margin:4px 0}
 .related a{color:var(--acc);font-weight:600;text-decoration:none}
 .related a:hover{text-decoration:underline}
-.toolbox{background:#fff;border:2px solid var(--ice);border-radius:16px;padding:24px;margin:20px 0;box-shadow:0 10px 26px rgba(56,189,248,.16)}
+.toolbox{background:linear-gradient(180deg,#fff 0%,#f0f9fd 100%);border:3px solid var(--ice);border-top:8px solid var(--amber);border-radius:16px;padding:24px;margin:20px 0;box-shadow:0 14px 32px rgba(11,94,122,.22);overflow:hidden}
+.toolhead{display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,#08222e,#0b5e7a);margin:-24px -24px 22px;padding:16px 24px}
+.toolhead img{width:52px;height:52px;border-radius:12px;background:#fff;object-fit:cover;flex:none;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.th-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.th-name{color:#fff;font-weight:800;font-size:1.15rem;line-height:1.2}
+.toolbadge{background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;font-size:.72rem;font-weight:800;letter-spacing:.1em;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.th-tag{color:#bfe3f0;font-size:.92rem;margin-top:3px}
+.toolfoot{display:flex;gap:8px;align-items:center;border-top:1px solid #bfe3f0;margin:24px -24px -24px;padding:14px 24px;background:#eaf6fc;color:var(--mut);font-size:.88rem}
+.toolfoot img{width:22px;height:22px;border-radius:6px;flex:none}
+.toolfoot b{color:var(--acc)}
 .toolbox h2{margin-top:0;border:none;padding-bottom:0}
 .toolbox label{display:block;font-weight:700;margin:16px 0 6px;color:var(--navy)}
 .toolbox select,.toolbox input[type=text],.toolbox input[type=number]{width:100%;max-width:420px;padding:11px 13px;font-size:1rem;border:2px solid #cfe6ef;border-radius:10px;background:#f7fafc;color:var(--ink)}
@@ -72,6 +81,25 @@ footer a{color:#cfe6ef}
 .toolbtn{display:inline-block;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;font-weight:700;font-size:1rem;border:none;padding:13px 26px;border-radius:999px;cursor:pointer;margin-top:18px;box-shadow:0 6px 16px rgba(245,158,11,.45)}
 .toolbtn:hover{filter:brightness(1.06)}
 .toolbtn.secondary{background:var(--acc);box-shadow:0 6px 16px rgba(11,94,122,.3)}
+.toolcallout{background:#eaf6fc;border:2px solid var(--ice);border-left:6px solid var(--acc);border-radius:12px;padding:16px 18px;margin:24px 0}
+.toolcallout h3{margin:0 0 6px;color:var(--acc)}
+.toolcallout p{margin:0;color:#3d5261}
+.toolcallout a{color:var(--acc);font-weight:700}
+.toolcallout .toolbadge{vertical-align:middle;margin-left:6px}
+.toolband{background:linear-gradient(135deg,#08222e 0%,#0b5e7a 55%,#1289a8 100%);border-radius:16px;padding:28px;margin:22px 0;box-shadow:0 12px 30px rgba(11,94,122,.35)}
+.toolband h2{border:none;margin-top:0;color:#fff}
+.toolband>p{color:#d6ecf5}
+.toolcard{background:#fff;border-top:5px solid var(--amber);border-radius:14px;padding:18px;text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s;display:block}
+.toolcard:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(0,0,0,.25)}
+.toolcard .ico{font-size:1.9rem;line-height:1}
+.toolcard h3{margin:10px 0 6px;color:var(--acc)}
+.toolcard p{margin:0;color:var(--mut);font-size:.95rem}
+.toolcard .use{display:block;margin-top:10px;color:#d97706;font-weight:800;font-size:.95rem}
+.toolstrip{background:var(--navy);border-top:3px solid var(--amber);color:#cfe6ef;padding:16px 0;text-align:center;font-size:.95rem}
+.toolstrip b{color:#fff}
+.toolstrip a{color:#fff;font-weight:700;text-decoration:none;margin:0 8px}
+.toolstrip a:hover{text-decoration:underline}
+.toolstrip .toolbadge{margin-left:8px}
 .resultbox{margin-top:22px;padding:18px 20px;border-radius:12px;background:#eaf6fc;border:1px solid #bfe3f0}
 .resultbox h3{margin-top:0;color:var(--acc)}
 .kitgroup{margin:20px 0}
@@ -103,4 +131,4 @@ table.pressure td:first-child{font-weight:700}
 .pagebtn.current{background:var(--acc);border-color:var(--acc);color:#fff}
 .ttwrap{max-width:605px;margin:18px auto}
 .ttwrap .tiktok-embed{margin:0 auto !important}
-@media(max-width:560px){h1{font-size:1.65rem}.hero{padding:24px 20px}.hero h2{font-size:1.4rem}}
+@media(max-width:560px){h1{font-size:1.65rem}.hero{padding:24px 20px}.hero h2{font-size:1.4rem}.toolbox{padding:18px 14px}.toolhead{margin:-18px -14px 18px;padding:14px}.toolhead img{width:44px;height:44px}.th-name{font-size:1.02rem}.toolfoot{margin:20px -14px -18px;padding:12px 14px}.toolband{padding:22px 16px}.toolstrip a{display:inline-block;margin:4px 8px}}
