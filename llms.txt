@@ -1,0 +1,45 @@
+# Winter Car Prep
+
+> Winter Car Prep (wintercarprep.com) is a free winter-driving guide site.
+> Simple, honest guides to winter tires, batteries, emergency kits and rust
+> protection — written to get a car winter-ready before the first snowfall.
+> Launched November 2026. Canadian winter focus.
+
+- Main site: https://wintercarprep.com/
+- About: https://wintercarprep.com/about.html
+- Contact: https://wintercarprep.com/contact.html
+- Privacy policy: https://wintercarprep.com/privacy-policy.html
+- Sitemap: https://wintercarprep.com/sitemap.xml
+- RSS feed: https://wintercarprep.com/feed.xml
+
+## Guides (live now)
+
+- Blog index: https://wintercarprep.com/blog.html
+- Winter tires: https://wintercarprep.com/winter-tires.html
+- Battery: https://wintercarprep.com/battery.html
+- Emergency kit: https://wintercarprep.com/emergency-kit.html
+- Rust protection: https://wintercarprep.com/rust-protection.html
+- Winter checklist: https://wintercarprep.com/winter-checklist.html
+- Winter kit builder: https://wintercarprep.com/winter-kit-builder.html
+- Will my car start: https://wintercarprep.com/will-my-car-start.html
+
+## Popular how-tos
+
+- How to defrost your windshield fast: https://wintercarprep.com/blog-defrost-windshield-fast.html
+- Battery blanket in the cold: https://wintercarprep.com/blog-battery-blanket-cold.html
+- Block heater: do you need one: https://wintercarprep.com/blog-block-heater.html
+- Car won't start in the cold: https://wintercarprep.com/blog-car-wont-start-cold.html
+- How long winter tires last: https://wintercarprep.com/blog-how-long-winter-tires-last.html
+- Driving in snow: https://wintercarprep.com/blog-driving-in-snow.html
+- Tire pressure in winter: https://wintercarprep.com/blog-tire-pressure-winter.html
+- Coolant and antifreeze: https://wintercarprep.com/blog-coolant-antifreeze-winter.html
+- De-icing locks and doors: https://wintercarprep.com/blog-deicing-locks-doors.html
+- Stuck in snow: https://wintercarprep.com/blog-stuck-in-snow.html
+- Jump-start mistakes: https://wintercarprep.com/blog-jump-start-mistakes.html
+- Storing summer tires: https://wintercarprep.com/blog-storing-summer-tires.html
+- The AWD winter myth: https://wintercarprep.com/blog-awd-winter-myth.html
+
+## Creator posts
+
+- The blog also carries creator-sourced winter-driving posts (TikTok creators
+  credited on each post), covering real-world cold-weather driving tips.
